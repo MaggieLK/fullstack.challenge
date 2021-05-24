@@ -15,10 +15,9 @@ const useAccount = (): [Account, () => Promise<void>] => {
     try {
       update = await getUpdatedAccount(account)
     } catch (e) {
-      console.log('e', e)
-      update = {calendars : []}
+      update = { calendars: [] }
     }
-    setAccount(await getUpdatedAccount(update))
+    setAccount(update)
   }
   return [account, refreshAccount]
 }

@@ -69,6 +69,18 @@ The requirements for this feature are:
 Please add your answers to the questions below:
 
 1. How long did you spend on this challenge?
+
+4 and a half hours
+
 2. In your opinion, what are features that Double could work on that would be helpful for assistants when managing agendas?
+
+A place for notes - to help them remember personal details and keep the different executives they help straight so they can add a human touch in all their interactions.
+
 3. If you had more time, what would you add or change in the codebase?
+
+Well, I would do part 4 with more time (if you want me to continute working let me know).
+Also, in the select menu I ended up using the color as a the calendar name (but still filtering by id). I'd like to have an actual calendar name and maybe some styling on the dropdown menu.
+
 4. Do you have any constructive feedback that you would like to share with our team?
+
+Thanks for letting me start with 2 hours on Friday and then finish the other two hours this weekend! It definitely helped on a busy week!

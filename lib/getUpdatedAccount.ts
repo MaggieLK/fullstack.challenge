@@ -17,7 +17,6 @@ const getUpdatedEvent = (calendarEvent: Event): Event => {
       hour: flipACoin() ? -1 : 1,
     })
   }
-  console.log(calendarEvent)
   return calendarEvent
 }
 
