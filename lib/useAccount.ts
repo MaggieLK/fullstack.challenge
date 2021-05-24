@@ -9,9 +9,16 @@ const initialAccountValue = createAccount()
 
 const useAccount = (): [Account, () => Promise<void>] => {
   const [account, setAccount] = useState<Account>(initialAccountValue)
-  const refreshAccount = async () =>
-    setAccount(await getUpdatedAccount(account))
 
+  const refreshAccount = async () => {
+    let update
+    try {
+      update = await getUpdatedAccount(account)
+    } catch (e) {
+      update = { calendars: [] }
+    }
+    setAccount(update)
+  }
   return [account, refreshAccount]
 }
 

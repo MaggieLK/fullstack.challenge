@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useMemo } from 'react'
+import React, { ReactElement, useContext, useMemo, useState } from 'react'
 import { DateTime } from 'luxon'
 
 import greeting from 'lib/greeting'
@@ -9,6 +9,8 @@ import AccountContext from 'src/context/accountContext'
 
 import List from './List'
 import EventCell from './EventCell'
+import ErrorCell from './ErrorCell'
+import Select from './Select'
 
 import style from './style.scss'
 
@@ -29,6 +31,8 @@ const compareByDateTime = (a: AgendaItem, b: AgendaItem) =>
 const Agenda = (): ReactElement => {
   const account = useContext(AccountContext)
 
+  const [value, setValue] = useState('')
+
   const events: AgendaItem[] = useMemo(
     () =>
       account.calendars
@@ -39,7 +43,37 @@ const Agenda = (): ReactElement => {
     [account],
   )
 
-  const title = useMemo(() => greeting(DateTime.local().hour), [])
+  const title = useMemo(
+    () => greeting(DateTime.local().hour),
+    [DateTime.local().hour],
+  )
+
+  const calendars: { id: string; color: string }[] = account.calendars.map(
+    (cal) => {
+      return { id: cal.id, color: cal.color }
+    },
+  )
+
+  let info
+  if (account.calendars.length === 0) {
+    info = (
+      <List>
+        <ErrorCell />
+      </List>
+    )
+  } else {
+    info = (
+      <List>
+        {events.map(({ calendar, event }) => {
+          if (value == calendar.id || value === '') {
+            return (
+              <EventCell key={event.id} calendar={calendar} event={event} />
+            )
+          }
+        })}
+      </List>
+    )
+  }
 
   return (
     <div className={style.outer}>
@@ -47,12 +81,11 @@ const Agenda = (): ReactElement => {
         <div className={style.header}>
           <span className={style.title}>{title}</span>
         </div>
-
-        <List>
-          {events.map(({ calendar, event }) => (
-            <EventCell key={event.id} calendar={calendar} event={event} />
-          ))}
-        </List>
+        <Select
+          calendars={calendars}
+          onChange={(e: any) => setValue(e.target.value)}
+        />
+        <div>{info}</div>
       </div>
     </div>
   )
